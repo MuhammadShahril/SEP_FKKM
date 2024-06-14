@@ -297,6 +297,10 @@
                          <label for="appBusinessPeriod">Remarks</label>
                          <input type="text" class="form-control" id="payRemarks" name="payRemarks" required>
                      </div>
+                     <div class="form-group">
+                         <label for="appBusinessPeriod">Proof of Payment</label>
+                         <input type="file" class="form-control" id="payProof" name="payProof" required>
+                     </div>
                      <input type="hidden" id="payDate" name="payDate" value="<?php echo date('Y-m-d'); ?>" required>
                      <div class="modal-footer">
                          <button type="button" class="btn btn-secondary" style="background-color: #354B48; color:white;" data-bs-dismiss="modal">Close</button>

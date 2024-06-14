@@ -109,20 +109,4 @@ class kpPaymentController extends Controller
 
     }
 
-    public function showPaymentForm($applicationId)
-    {
-        $application = Application::find($applicationId);
-        $user = Auth::user();
-
-        // Fetch necessary data
-        $kioskNumber = $application->payKioskNum;
-        $feesType = $application->payFeeType;
-        $paymentTotal = $application->payFeeTotal;
-        $email = $user->payEmail;
-        $remarks = $application->payRemarks;
-
-        return view('kpPayment', compact('kioskNumber', 'feesType', 'paymentTotal', 'email', 'remarks'));
-    }
-
-
 }
