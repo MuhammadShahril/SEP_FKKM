@@ -93,6 +93,23 @@ class kpApplicationController extends Controller
     return redirect('/KP-appForm');
     }
 
+    public function getKiosks()
+    {
+        // Fetch all kiosks
+        $kiosks = Kiosk::all();
+
+        return response()->json($kiosks);
+    }
+
+    public function updateKiosk(Request $request, $id)
+    {
+        $kiosk = Kiosk::find($id);
+        $kiosk->occupied = $request->occupied;
+        $kiosk->save();
+
+        return response()->json($kiosk);
+    }
+
     public function profile(Request $request)
     {
         $user = $request->user();

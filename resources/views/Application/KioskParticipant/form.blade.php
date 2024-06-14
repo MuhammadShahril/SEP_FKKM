@@ -159,6 +159,8 @@
                                             <option @if ($application->appKioskNum == '2') selected @endif value="2">2 
                                             <option @if ($application->appKioskNum == '3') selected @endif value="3">3
                                             <option @if ($application->appKioskNum == '4') selected @endif value="4">4
+                                            <option @if ($application->appKioskNum == '5') selected @endif value="5">5
+                                            <option @if ($application->appKioskNum == '6') selected @endif value="6">6
                                         </select>                    
                                     </div>
                                     <div class="form-group">
@@ -218,6 +220,8 @@
                             <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -229,6 +233,18 @@
                         <button type="submit" class="btn btn-info" name="addApp">APPLY</button>
                     </div>
                 </form>
+                <h2 style="text-align:center;">Kiosk Availability</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kiosk Number</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="kioskTable">
+                        <!-- Dynamic content will be inserted here -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -266,5 +282,80 @@
     });
 </script>
 
+<script>
+    async function fetchKiosks() {
+        const response = await fetch('/KP-kiosks');
+        return response.json();
+    }
 
+    async function updateKioskStatus(id, status) {
+        await fetch(`/KP-kiosks/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ occupied: status })
+        });
+    }
+
+    function renderKioskTable(kiosks) {
+        const tableBody = document.getElementById('kioskTable');
+        tableBody.innerHTML = ''; // Clear existing table data
+
+        kiosks.forEach(kiosk => {
+            const row = document.createElement('tr');
+            const numberCell = document.createElement('td');
+            const statusCell = document.createElement('td');
+
+            numberCell.textContent = kiosk.kioskNumber;
+            if (kiosk.kioskStatus == 'Not Available') {
+                statusCell.textContent = 'Occupied';
+            }else{
+                statusCell.textContent = 'Available';
+            }
+            
+
+            if (kiosk.kioskStatus == 'Not Available') {
+                row.classList.add('occupied');
+            }
+
+            row.appendChild(numberCell);
+            row.appendChild(statusCell);
+            tableBody.appendChild(row);
+        });
+    }
+
+    async function refreshKioskTable() {
+        const kiosks = await fetchKiosks();
+        renderKioskTable(kiosks);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        refreshKioskTable();
+        setInterval(refreshKioskTable, 2000); // Refresh every 2 seconds
+    });
+</script>
+
+
+<style>
+    table {
+        width: 50%;
+        border-collapse: collapse;
+        margin: 20px auto;
+        font-family: Arial, sans-serif;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .occupied {
+        background-color: grey;
+        color: white;
+    }
+</style>
 @stop

@@ -103,6 +103,8 @@ Route::get('/KP-appForm', [kpApplicationController::class, 'index'])->name('kp.f
 Route::post('/KP-appForm', [kpApplicationController::class, 'store'])->name('kp.form');
 Route::put('/appEditKP/{application}', [kpApplicationController::class, 'update'])->name('kp.update');
 Route::get('/KP-appForm/{application}/delete', [kpApplicationController::class, 'destroy']);
+Route::get('/KP-kiosks', [kpApplicationController::class, 'getKiosks']);
+Route::post('/KP-kiosks/{id}', [kpApplicationController::class, 'updateKiosk']);
 
 // Account
 // ADMIN
