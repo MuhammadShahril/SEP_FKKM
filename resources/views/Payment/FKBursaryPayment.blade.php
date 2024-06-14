@@ -46,9 +46,9 @@
                         <td class="text-xs">{{ $loop->index + 1 }}</td>
                         <td class="text-xs">
                             @foreach($users as $userr)
-                                
+
                                     {{ $userr->userName }}
-                                
+
                             @endforeach
                         </td>
                         <td class="text-xs">
@@ -157,7 +157,7 @@
                                             @foreach($application as $applications)
                                                     <option  value="{{$applications->appKioskNum}}" >{{$applications->appName}} -- {{$applications->appKioskNum}}</option>
                                             @endforeach
-                                        </select>   
+                                        </select>
                                         </div>
                                      <div class="form-group">
                                          <label for="email">Fee Type</label>
@@ -166,7 +166,7 @@
                                              <option value="Rental">Rental</option>
                                              <option value="Compound">Compound</option>
                                              <option value="Others">Others</option>
-                                         </select>                    
+                                         </select>
                                      </div>
                                      <div class="form-group">
                                          <label for="contactNumber">Payment Total(MYR)</label>
@@ -252,7 +252,7 @@
             <div class="modal-body m-3">
                 <form method="POST" action="/addFKBursaryPayment" enctype="multipart/form-data">
                     @csrf
-                    
+
                      <div class="form-group">
                         <label for="name">Payment For</label>
                         <select class="form-control" id="payFor1" name="payFor" required>
@@ -260,7 +260,7 @@
                             @foreach($application as $applications)
                                 <option value="{{ $applications->appKioskNum }}">{{ $applications->appName }} -- {{ $applications->appKioskNum }}</option>
                             @endforeach
-                        </select>                   
+                        </select>
                         </div>
                      <div class="form-group">
                          <label for="email">Fee Type</label>
@@ -269,7 +269,7 @@
                              <option value="Rental">Rental</option>
                              <option value="Compound">Compound</option>
                              <option value="Others">Others</option>
-                         </select>                    
+                         </select>
                      </div>
                      <input type="hidden" name="userID" id="userID">
                     <input type="hidden" name="appID" id="appID" >
@@ -315,8 +315,8 @@
     <script>
 		document.addEventListener("DOMContentLoaded", function() {
             var currentDate = new Date().toISOString().split('T')[0];
-            
-          
+
+
 
             $('#payFor1').change(function() {
                 var selectedOption = $(this).val();
@@ -367,15 +367,15 @@
 				responsive: true
 			});
 			datatablesButtons.buttons().container().appendTo("#datatables-buttons_wrapper .col-md-6:eq(0)")
-            
+
             document.getElementById('payDate').value = currentDate;
 			// Datatables basic
-		
-           
+
+
         });
 
 
-       
+
 		function deleteUser(userID) {
 			if (confirm("Are you sure you want to delete this user?")) {
 				var form = document.createElement("form");
